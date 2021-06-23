@@ -1,0 +1,130 @@
+
+<div class="section-body">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+            <h4>Liste des Participants</h4>
+            <div class="card-header-action">
+              <button type="button" class="btn btn-success" (click)="synchroniser()"><i class="fas fa-sync-alt"></i> Synchroniser</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <kendo-grid
+            [kendoGridBinding]="gridView"
+            kendoGridSelectBy="id"
+            [selectedKeys]="mySelection"
+            [pageSize]="20"
+            [pageable]="true"
+            [sortable]="true"
+            [groupable]="true"
+            [reorderable]="true"
+            [resizable]="true"
+
+            filterable="menu"
+            [height]="800"
+            [columnMenu]="{ filter: true }"
+        >
+            <ng-template kendoGridToolbarTemplate>
+                <input placeholder="Search in all columns..." kendoTextBox (input)="onFilter($event.target.value)"/>
+                <button kendoGridExcelCommand type="button" icon="file-excel" style="float:right;">Export to Excel</button>
+                <button kendoGridPDFCommand icon="file-pdf" style="float:right;">Export to PDF</button>
+            </ng-template>
+            <kendo-grid-checkbox-column
+                [width]="45"
+                [headerClass]="{'text-center': true}"
+                [class]="{'text-center': true}"
+                [resizable]="false"
+                [columnMenu]="false"
+                showSelectAll="true"
+            ></kendo-grid-checkbox-column>
+            <kendo-grid-command-column title="Action" width="100">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <button type="button" class="btn btn-success" (click)="makeUserApproved()"><i class="fas fa-edit"></i> Approuvé</button>
+              </ng-template>
+          </kendo-grid-command-column>
+          <kendo-grid-column field="cout" title="cout" [width]="100">
+        </kendo-grid-column>
+        <kendo-grid-column field="nbrPlace" title="nbrPlace" [width]="100">
+        </kendo-grid-column>
+        <kendo-grid-column
+        field="approved"
+        title="Approuved"
+        [width]="100"
+        [class]="{'text-center': true}"
+        [resizable]="false"
+    >
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <span *ngIf="dataItem.approved == true;else disaproved"
+             [attr.disabled]="dataItem.approved == true" 
+             class="badge badge-success">Approuvé</span>
+             <ng-template #disaproved>
+             
+            <span *ngIf="dataItem.approved == false"
+             [attr.disabled]="dataItem.approved == false" 
+             class="badge badge-danger">disapprové</span>
+             </ng-template>
+        </ng-template>
+    </kendo-grid-column>
+              <kendo-grid-column
+              field="user.matricule"
+              title="Matricule"
+              [width]="120"
+              [class]="{'text-center': true}"
+              [resizable]="false">
+              </kendo-grid-column>
+                <kendo-grid-column field="nom" title="Nom & Prénom" [width]="250">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <!-- <figure class="avatar mr-2 avatar-sm bg-primary text-white user-img-radious-style" data-initial="CB"></figure> -->
+                      <div class="customer-name">{{ dataItem.user.nom }} {{dataItem.user.prenom }}</div>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="contrat" title="Type de contrat" [width]="100">
+                </kendo-grid-column>
+                <kendo-grid-column
+                field="user.dateEmbauche"
+                title="Date d'embauche"
+                [width]="200"
+                [class]="{'text-center': true}"
+                [resizable]="false">
+                </kendo-grid-column>
+                <kendo-grid-column
+                field="user.direction.nomDirection"
+                title="Direction"
+                [width]="250"
+                [class]="{'text-center': true}">
+                <ng-template kendoGridFilterMenuTemplate
+                let-column="column"
+                let-filter="filter"
+                let-filterService="filterService"
+                >
+                <!-- <multicheck-filter
+                  [isPrimitive]="false"
+                  [field]="column.field"
+                  [currentFilter]="filter"
+                  [filterService]="filterService"
+                  textField="nomDirection"
+                  valueField="id"
+                  [data]="directions"></multicheck-filter> -->
+            </ng-template>
+            <!-- <ng-template kendoGridCellTemplate let-dataItem>
+                {{dataItem.Category?.CategoryName}}
+            </ng-template> -->
+                </kendo-grid-column>
+                <kendo-grid-column
+                field="activite.nomActivite"
+                title="Activité"
+                [width]="250"
+                [class]="{'text-center': true}">
+                </kendo-grid-column>
+
+            <kendo-grid-pdf fileName="Employees.pdf" [repeatHeaders]="true"></kendo-grid-pdf>
+            <kendo-grid-excel fileName="Employees.xlsx"></kendo-grid-excel>
+        </kendo-grid>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+

@@ -1,0 +1,269 @@
+<div class="section-body">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+              <h4>Liste des collaborateurs</h4>
+             
+            </div>
+            <div class="card-body">
+            <kendo-grid
+       
+            [kendoGridBinding]="employees"    
+            [filter]="filter"
+            filterable="menu"
+            (filterChange)="filterChange($event)"
+            kendoGridSelectBy="id"
+            [pageSize]="gridState.take" 
+            [skip]="gridState.skip" 
+            [sort]="gridState.sort"
+            [pageable]="{buttonCount: buttonCount, info: info,type: type, pageSizes: [5, 10, 15, 20],previousNext: previousNext}"
+            [selectedKeys]="mySelection"
+            [sortable]="true"
+          
+            [groupable]="true"
+            [reorderable]="true"
+            [resizable]="true"
+            >
+        
+            <ng-template kendoGridToolbarTemplate #content let-modal>
+                <input placeholder="Search in all columns..." kendoTextBox (input)="onFilter($event.target.value)"/>
+                <button kendoGridPDFCommand icon="file-pdf" style="float:right;">Export to PDF</button>
+                <button type="button" kendoGridExcelCommand icon="file-excel" style="float:right;">Export to Excel</button>               
+            </ng-template>
+        
+            <kendo-grid-checkbox-column
+                [width]="45"
+                [headerClass]="{'text-center': true}"
+                [class]="{'text-center': true}"
+                [resizable]="false"
+                [columnMenu]="false"
+                showSelectAll="true">
+            </kendo-grid-checkbox-column>               
+        
+            <kendo-grid-column-group title="Liste des Collaborateurs" [columnMenu]="false">
+
+                <kendo-grid-column title="Action" width="100">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <button type="button" class="btn btn-success" (click)="open(editUser, dataItem.id)"><i class="fas fa-edit"></i> Noter</button>          
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column title="ID" field="id" [width]="80"></kendo-grid-column>
+                <kendo-grid-column title="Matricule" field="matricule" editor="numeric"  [width]="120"></kendo-grid-column>
+                <kendo-grid-column title="Nom" field="nom" [width]="90"></kendo-grid-column>
+                <kendo-grid-column title="Prénom" field="prenom" [width]="100"></kendo-grid-column>
+            </kendo-grid-column-group>
+
+            <kendo-grid-column-group title="Fonction à selectionner" [columnMenu]="false">
+
+                <kendo-grid-column title="Poste" field="nomPoste" [width]="100">
+                <ng-template kendoGridFilterMenuTemplate
+                    let-column="column"
+                    let-filter="filter"
+                    let-filterService="filterService"
+                    >
+                    <multicheck-filter
+                            [isPrimitive]="true"
+                            [field]="column.field"
+                            [filterService]="filterService"
+                            [currentFilter]="filter"
+                        [data]="distinctPrimitive(column.field)"></multicheck-filter>
+                </ng-template>
+                </kendo-grid-column>
+        
+                <kendo-grid-column title="Equipe" field="nomEquipe" [width]="100">
+                  <ng-template kendoGridFilterMenuTemplate
+                  let-column="column"
+                  let-filter="filter"
+                  let-filterService="filterService"
+                  >
+                  <multicheck-filter
+                    [isPrimitive]="true"
+                    [field]="column.field"
+                    [filterService]="filterService"
+                    [currentFilter]="filter"
+                    [data]="distinctPrimitive(column.field)"></multicheck-filter>
+              </ng-template>
+                    </kendo-grid-column> 
+        
+                
+                    <kendo-grid-column title="Activité" field="nomActivite" [width]="100">
+                    <ng-template kendoGridFilterMenuTemplate
+                        let-column="column"
+                        let-filter="filter"
+                        let-filterService="filterService"
+                        >
+                        <multicheck-filter
+                                [isPrimitive]="true"
+                                [field]="column.field"
+                                [filterService]="filterService"
+                                [currentFilter]="filter"
+                            [data]="distinctPrimitive(column.field)"></multicheck-filter>
+                    </ng-template>
+                </kendo-grid-column>
+             
+                <kendo-grid-column title="Direction" field="nomDirection" [width]="120">
+                    <ng-template kendoGridFilterMenuTemplate
+                        let-column="column"
+                        let-filter="filter"
+                        let-filterService="filterService"
+                        >
+                        <multicheck-filter
+                                [isPrimitive]="true"
+                                [field]="column.field"
+                                [filterService]="filterService"
+                                [currentFilter]="filter"
+                            [data]="distinctPrimitive(column.field)">
+                            </multicheck-filter>
+                    </ng-template>
+                </kendo-grid-column> 
+            </kendo-grid-column-group>
+            <kendo-grid-column-group title="Pondération par critère" [columnMenu]="false">
+
+                <kendo-grid-column-group title="4" [columnMenu]="false">
+                    <kendo-grid-column title="Capacité d'analyse et d'innovation" field="capaciteAnalyse" [width]="270"></kendo-grid-column>
+                </kendo-grid-column-group>
+
+                <kendo-grid-column-group title="4" [columnMenu]="false">
+                    <kendo-grid-column title="Méthodologie & processus métier"  field="methodologie" [width]="270"></kendo-grid-column>
+                </kendo-grid-column-group>
+
+                <kendo-grid-column-group title="1" [columnMenu]="false">
+                    <kendo-grid-column title="Maîtrise des standards" field="maitriseStandards" editor="numeric"  [width]="250"></kendo-grid-column>
+                </kendo-grid-column-group>
+
+                <kendo-grid-column-group title="5" [columnMenu]="false">
+                    <kendo-grid-column title="Compétences spécifiques" field="competencesSpecifiques" [width]="250"></kendo-grid-column>
+                </kendo-grid-column-group>
+
+                <kendo-grid-column-group title="0" [columnMenu]="false">
+                    <kendo-grid-column title="Gestion des projets" field="gestionProjets" [width]="250"></kendo-grid-column>
+                </kendo-grid-column-group>
+
+                <kendo-grid-column-group title="5" [columnMenu]="false">
+                    <kendo-grid-column title="Organisation & rigueur & fiabilité" field="organisationRigueurFiabilite" [width]="250"></kendo-grid-column>
+                </kendo-grid-column-group>
+
+                <kendo-grid-column-group title="0" [columnMenu]="false">
+                    <kendo-grid-column title="Gestion des ressources"  field="gestionRessources" [width]="250"></kendo-grid-column>
+                </kendo-grid-column-group>
+
+                <kendo-grid-column-group title="3" [columnMenu]="false">
+                    <kendo-grid-column title="Communication et langue" field="communicationLangue" [width]="250"></kendo-grid-column>
+                </kendo-grid-column-group>
+
+                <kendo-grid-column-group title="3" [columnMenu]="false">
+                    <kendo-grid-column title="Capacités rédactionnelles" field="capacitesRedactionnelles" [width]="250"></kendo-grid-column>
+                </kendo-grid-column-group>
+
+                <kendo-grid-column title="Total" field="total" [width]="100"></kendo-grid-column>
+                
+            </kendo-grid-column-group>
+            
+              <kendo-grid-pdf fileName="actia.pdf" [allPages]="true" paperSize="A4" [repeatHeaders]="true" [landscape]="true">
+                  <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
+                  <ng-template kendoGridPDFTemplate let-pageNum="pageNum" let-totalPages="totalPages">
+                  <div class="page-template">
+                      <div class="header">
+                        <div style="float: right">Page {{ pageNum }} of {{ totalPages }}</div>
+                        Multi-page grid with automatic page breaking
+                      </div>
+                      <div class="footer">
+                        Page {{ pageNum }} of {{ totalPages }}
+                      </div>
+                    </div>
+                  </ng-template>
+              </kendo-grid-pdf> 
+              <kendo-grid-excel fileName="Collaborateurs.xlsx"></kendo-grid-excel>
+              </kendo-grid>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+  
+
+    
+  <ng-template #editUser let-modal>
+    <div class="modal-header">
+      
+      <h4 class="modal-title">Edit User</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="onEdit()" class="k-form">
+        
+        <kendo-formfield > 
+          <kendo-label for="name">Capacité d'analyse et d'innovation</kendo-label>
+          <input type="number" class="form-control" id="capaciteAnalyse" [(ngModel)]="user.capaciteAnalyse" name="capaciteAnalyse" #capaciteAnalyse required>
+          <kendo-formhint> Capacité d'analyse et d'innovation </kendo-formhint>
+          <kendo-formerror>Error: Capacité d'analyse et d'innovation is required</kendo-formerror>
+        </kendo-formfield>
+        <kendo-formfield > 
+          <kendo-label for="name">Méthodologie & processus métier</kendo-label>
+          <input type="number" class="form-control" id="methodologie" [(ngModel)]="user.methodologie" name="methodologie" #methodologie required>
+          <kendo-formhint> Méthodologie & processus métier</kendo-formhint>
+          <kendo-formerror>Error: Méthodologie & processus métier is required</kendo-formerror>
+        </kendo-formfield>
+        <kendo-formfield > 
+          <kendo-label for="name">Maîtrise des standards</kendo-label>
+          <input type="number" class="form-control" id="maitriseStandards" [(ngModel)]="user.maitriseStandards" name="maitriseStandards" #maitriseStandards required>
+          <kendo-formhint> Maîtrise des standards</kendo-formhint>
+          <kendo-formerror>Error: Maîtrise des standards is required</kendo-formerror>
+        </kendo-formfield>
+        <kendo-formfield > 
+          <kendo-label for="name">Compétences spécifiques</kendo-label>
+          <input type="number" class="form-control" id="competencesSpecifiques" [(ngModel)]="user.competencesSpecifiques" name="competencesSpecifiques" #nom required>
+          <kendo-formhint> Compétences spécifiques </kendo-formhint>
+          <kendo-formerror>Error: Compétences spécifiques is required</kendo-formerror>
+        </kendo-formfield>
+        <kendo-formfield > 
+          <kendo-label for="name">Gestion des projets </kendo-label>
+          <input type="number" class="form-control" id="gestionProjets" [(ngModel)]="user.gestionProjets" name="gestionProjets" #gestionProjets required>
+          <kendo-formhint> Gestion des projets </kendo-formhint>
+          <kendo-formerror>Error: Gestion des projets is required</kendo-formerror>
+        </kendo-formfield>
+        <kendo-formfield > 
+          <kendo-label for="name">Organisation & rigueur & fiabilité </kendo-label>
+          <input type="number" class="form-control" id="organisationRigueurFiabilite" [(ngModel)]="user.organisationRigueurFiabilite" name="organisationRigueurFiabilite" #organisationRigueurFiabilite required>
+          <kendo-formhint> Organisation & rigueur & fiabilité </kendo-formhint>
+          <kendo-formerror>Error: Organisation & rigueur & fiabilité is required</kendo-formerror>
+        </kendo-formfield>
+        <kendo-formfield > 
+          <kendo-label for="name">Gestion des ressources </kendo-label>
+          <input type="number" class="form-control" id="gestionRessources" [(ngModel)]="user.gestionRessources" name="gestionRessources" #gestionRessources required>
+          <kendo-formhint> Gestion des ressources </kendo-formhint>
+          <kendo-formerror>Error: Gestion des ressources is required</kendo-formerror>
+        </kendo-formfield>
+        <kendo-formfield > 
+            <kendo-label for="name">Communication et langue </kendo-label>
+            <input type="number" class="form-control" id="communicationLangue" [(ngModel)]="user.communicationLangue" name="communicationLangue" #communicationLangue required>
+            <kendo-formhint> Communication et langue </kendo-formhint>
+            <kendo-formerror>Error: Communication et langue is required</kendo-formerror>
+        </kendo-formfield>
+        <kendo-formfield>
+          <kendo-label for="status-select">Capacités rédactionnelles</kendo-label>
+          <input type="number" class="form-control" id="capacitesRedactionnelles" required [(ngModel)]="user.capacitesRedactionnelles" name="capacitesRedactionnelles" #capacitesRedactionnelles required>
+          <kendo-formhint> Capacités rédactionnelles </kendo-formhint>
+          <kendo-formerror>Error: Capacités rédactionnelles is required</kendo-formerror>
+        </kendo-formfield>
+        <kendo-formfield > 
+            <kendo-label for="name">Total</kendo-label>
+            <input type="number" class="form-control" id="total" [(ngModel)]="user.total" name="total" #total required>
+            <kendo-formhint> Total </kendo-formhint>
+            <kendo-formerror>Error: Total is required</kendo-formerror>
+          </kendo-formfield>
+  
+    </form>
+  
+    </div>
+    <div class="modal-footer">
+      <button class="k-button k-primary" (click)="onEdit()">Submit</button>
+      <button type="button" class="btn btn-light" (click)="onEdit()" (click)="modal.close('Close click')">Close</button>
+    </div>
+  </ng-template>

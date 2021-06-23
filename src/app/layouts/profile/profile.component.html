@@ -1,0 +1,205 @@
+<div class="section-body">
+  <div class="row mt-sm-4">
+    <div class="col-12 col-md-12 col-lg-4">
+
+      <div class="card author-box">
+        <div class="card-body">
+          <div class="author-box-center">
+            <img alt="image" src="assets/img/users/user-9.png" class="rounded-circle author-box-picture">
+            <!-- <figure class="avatar mr-2 avatar-xl" data-initial="RM"></figure> -->
+            <div class="clearfix"></div>
+            <div class="author-box-name">
+              <a href="#">{{user?.nom}} {{user?.prenom}}</a>
+            </div>
+            <div class="author-box-job">Software Designer</div>
+            <div class="author-box-job">{{user?.matricule}}</div>
+            <div class="py-4">
+              <p class="clearfix">
+                <span class="float-left">
+                  Poste
+                </span>
+                <span class="float-right text-muted">
+                  {{user?.nomPoste}}
+                </span>
+              </p>
+              <p class="clearfix">
+                <span class="float-left">
+                  Equipe
+                </span>
+                <span class="float-right text-muted">
+                  {{user?.nomEquipe}}
+                </span>
+              </p>
+              <p class="clearfix">
+                <span class="float-left">
+                  Activite
+                </span>
+                <span class="float-right text-muted">
+                  {{user?.nomActivite}}
+                </span>
+              </p>
+              <p class="clearfix">
+                <span class="float-left">
+                  Direction
+                </span>
+                <span class="float-right text-muted">
+                  {{user?.nomDirection}}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+      <app-experience></app-experience>
+    </div>
+
+    <div class="col-12 col-md-12 col-lg-8">
+      <div class="card" *ngIf="!edit">
+        <form method="post" class="needs-validation">
+          <div class="card-header">
+            <h4>Mon Profile</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="form-group col-md-6 col-12">
+                <label>First Name</label>
+                <h5>{{user?.username}}</h5>
+                <div class="invalid-feedback">
+                  Please fill in the first name
+                </div>
+              </div>
+              <div class="form-group col-md-6 col-12">
+                <label>Last Name</label>
+                <h5>{{user?.nom}}</h5>
+                <div class="invalid-feedback">
+                  Please fill in the last name
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-7 col-12">
+                <label>Email</label>
+                <div class="input-group">
+
+                  <h5>{{user?.email}}</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-7 col-12">
+                  <label>LinkedIn</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <h5>{{user?.linkedin}}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-5 col-12">
+                <label>Phone</label>
+                <div class="input-group">
+
+                  <h5>{{user?.telephone}}</h5>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-gr oup col-12">
+                <label>Bio</label>
+                <h5>{{user?.bio}}</h5>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer text-right">
+            <button class="btn btn-success" [routerLink]="[ '/profile', 'edit' ]">Modifier mon profile</button>
+          </div>
+        </form>
+      </div>
+      <div class="card" *ngIf="edit">
+        <form method="post" class="needs-validation" (ngSubmit)="patchUser()">
+          <div class="card-header">
+            <h4>Edit Profile</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="form-group col-md-6 col-12">
+                <label>First Name</label>
+                <input type="text" class="form-control" name="username" [(ngModel)]="newUser.username" [value]="user?.username">
+                <input type="hidden" class="form-control" name="id" [(ngModel)]="newUser.id" [value]="user?.id">
+                <div class="invalid-feedback">
+                  Please fill in the first name
+                </div>
+              </div>
+              <div class="form-group col-md-6 col-12">
+                <label>Last Name</label>
+                <input type="text" class="form-control" name="nom" [(ngModel)]="newUser.nom" [value]="user?.nom">
+                <div class="invalid-feedback">
+                  Please fill in the last name
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-7 col-12">
+                <label>Email</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fas fa-at"></i>
+                    </div>
+                  </div>
+                  <input type="email" class="form-control"  name="email" [(ngModel)]="newUser.email" [value]="user?.email">
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-7 col-12">
+                  <label>LinkedIn</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+
+                        <span class="float-right text-muted">
+                          <input type="text" name="linkedin" class="form-control" [(ngModel)]="newUser.linkedin"
+                            [value]="user?.linkedin">
+                        </span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-5 col-12">
+                <label>Phone</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fas fa-phone"></i>
+                    </div>
+                  </div>
+                  <input type="number" name="telephone" [(ngModel)]="newUser.telephone" class="form-control phone-number"
+                   [value]="user?.telephone">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-12">
+                <label>Bio</label>
+                <textarea [(ngModel)]="newUser.bio"
+                  class="form-control summernote-simple" name="bio" [value]="user?.bio">{{user?.bio}}</textarea>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer text-right">
+            <button class="btn btn-success" type="submit">Save Changes</button>
+          </div>
+        </form>
+      </div>
+
+
+      <app-formationsprofile></app-formationsprofile>
+
+    </div>
+  </div>
+
+</div>

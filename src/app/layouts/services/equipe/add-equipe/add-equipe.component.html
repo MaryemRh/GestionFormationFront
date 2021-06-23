@@ -1,0 +1,27 @@
+<div class="modal-body">
+    <form class="" (ngSubmit)="addEquipeForm.valid && submit()" novalidate [formGroup]="addEquipeForm">
+      <div class="form-group">
+        <label>Nom d'equipe</label>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Nom de l'équiupe" formControlName="nomEquipe">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputAddress2">Activite</label>
+        <select name="role" id="role"  class="custom-select d-block w-100" formControlName="nomActivite" data-placeholder="Select">
+            <option *ngFor="let act of activites" [ngValue]="act">
+              {{act.nomActivite}}
+            </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="inputAddress2">Responsable</label>
+        <select name="role" id="role"  class="custom-select d-block w-100" formControlName="responsable" data-placeholder="Select">
+            <option *ngFor="let user of users" [ngValue]="user">
+              {{user.username}}
+            </option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-success m-t-15 waves-effect">AJOUTER</button>
+    </form>
+  </div>

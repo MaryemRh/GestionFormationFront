@@ -1,0 +1,134 @@
+<div class="section-body">
+  <div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+      <div class="card card-statistic-1">
+        <div class="card-icon l-bg-purple">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="card-wrap">
+          <div class="padding-20">
+            <div class="text-right">
+              <h3 class="font-light mb-0">
+                <i class="ti-arrow-up text-success"></i> 524
+              </h3>
+              <span class="text-muted">Collaborateurs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+      <div class="card card-statistic-1">
+        <div class="card-icon l-bg-green">
+          <i class="fas fa-archway"></i>
+        </div>
+        <div class="card-wrap">
+          <div class="padding-20">
+            <div class="text-right">
+              <h3 class="font-light mb-0">
+                <i class="ti-arrow-up text-success"></i> 6
+              </h3>
+              <span class="text-muted">Directions</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+      <div class="card card-statistic-1">
+        <div class="card-icon l-bg-cyan">
+          <i class="fas fa-building"></i>
+        </div>
+        <div class="card-wrap">
+          <div class="padding-20">
+            <div class="text-right">
+              <h3 class="font-light mb-0">
+                <i class="ti-arrow-up text-success"></i> 4
+              </h3>
+              <span class="text-muted">Activites</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+      <div class="card card-statistic-1">
+        <div class="card-icon l-bg-orange">
+          <i class="fas fa-ethernet"></i>
+        </div>
+        <div class="card-wrap">
+          <div class="padding-20">
+            <div class="text-right">
+              <h3 class="font-light mb-0">
+                <i class="ti-arrow-up text-success"></i> 60
+              </h3>
+              <span class="text-muted">Equipes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<br>
+<br><br>
+<kendo-chart>
+  <kendo-chart-title
+    [text]="'Avancement des formations : Nombre / Année %/'"
+  >
+  </kendo-chart-title>
+  <kendo-chart-legend [title]="legendTitle" [position]="'right'">
+  </kendo-chart-legend>
+  <kendo-chart-series>
+    <kendo-chart-series-item
+      *ngFor="let item of series"
+      [type]="'line'"
+      [name]="item.name"
+      [data]="item.data"
+    >
+    </kendo-chart-series-item>
+  </kendo-chart-series>
+  <kendo-chart-category-axis>
+    <kendo-chart-category-axis-item [categories]="categories">
+    </kendo-chart-category-axis-item>
+  </kendo-chart-category-axis>
+</kendo-chart>
+
+<br><br>
+
+   <!--  <kendo-chart>
+      <kendo-chart-title text="Unit formations"></kendo-chart-title>
+
+      <kendo-chart-category-axis>
+        <kendo-chart-category-axis-item
+          [categories]="['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']"
+          [title]="{ text: 'Months' }"
+        >
+        </kendo-chart-category-axis-item>
+      </kendo-chart-category-axis>
+
+      <kendo-chart-series-defaults [highlight]="{ visible: false }">
+      </kendo-chart-series-defaults>
+
+      <kendo-chart-series>
+        <kendo-chart-series-item
+          type="column"
+          [data]="[10, 20, 30, 40, 50, 60, 70]"
+        >
+        </kendo-chart-series-item>
+        <kendo-chart-series-item
+          type="column"
+          [data]="[10, 20, 30, 40, 50, 60, 70]"
+        >
+        </kendo-chart-series-item>
+        <kendo-chart-series-item
+          type="column"
+          [data]="[56, 140, 195, 46, 123, 78, 95]"
+        >
+        </kendo-chart-series-item>
+      </kendo-chart-series>
+    </kendo-chart> -->
+    <br><br>
+  
+  
+</div>

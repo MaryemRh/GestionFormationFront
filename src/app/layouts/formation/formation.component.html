@@ -1,0 +1,547 @@
+<div class="section-body">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Liste des Formations</h4>
+            
+          </div>
+          <div class="card-body">
+            <kendo-grid
+            [kendoGridBinding]="formations"
+            kendoGridSelectBy="id"
+            [pageSize]="gridState.take"
+            [skip]="gridState.skip"
+            [sort]="gridState.sort"
+            [pageable]="{buttonCount: buttonCount, info: info,type: type, pageSizes: [5, 10, 15, 20],previousNext: previousNext}"
+            [selectedKeys]="mySelection"
+            [sortable]="true"
+            [filterable]="true"
+            [groupable]="true"
+            [reorderable]="true"
+            [resizable]="true"
+
+
+        >
+            <ng-template kendoGridToolbarTemplate >
+                <input placeholder="Search in all columns..." kendoTextBox (input)="onFilter($event.target.value)"/>
+                <button *ngIf='!isUSER()' kendoGridExcelCommand type="button" icon="file-excel" style="float:right;">Export to Excel</button>
+                <button *ngIf='!isUSER()' kendoGridPDFCommand icon="file-pdf" style="float:right;">Export to PDF</button>
+
+                <!-- Ajouter Formation -->
+
+                <button *ngIf='!isUSER()' (click)="openScrollableContent(longContent)"   kendoButton type="button"  >Add new</button>
+                <ng-template #longContent let-modal >
+                    <div class="modal-header">
+
+                      <h4 class="modal-title">Create Formation</h4>
+                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form (ngSubmit)="onSubmit()" class="k-form">
+
+                        <kendo-formfield >
+                          <kendo-label for="name">Code</kendo-label>
+                          <input type="text" class="form-control" id="code" required [(ngModel)]="formation.code" name="code"
+                          #code required>
+                          <kendo-formhint> Code Formation</kendo-formhint>
+                          <kendo-formerror>Error: Code is required</kendo-formerror>
+                        </kendo-formfield>
+
+                        <kendo-formfield>
+                          <kendo-label for="name">Type:</kendo-label>
+                          <select type="text" class="form-control" id="type" required [(ngModel)]="formation.type" name="type" #type required>
+                              <option value="">--Please choose an option--
+                              <option value="Interne">Interne
+                              <option value="Externe">Externe
+                          </select>
+                          <kendo-formhint> Type de la formation</kendo-formhint>
+                          <kendo-formerror>Error: Type is required</kendo-formerror>
+                        </kendo-formfield>
+
+                        <kendo-formfield>
+                          <kendo-label for="name">Theme:</kendo-label>
+                          <select type="text" class="form-control" id="theme" required [(ngModel)]="formation.theme" name="theme" #theme required>
+                              <option value="">--Please choose an option--</option>
+                              <option value="Software">Software</option>
+                              <option value="Hardware">Hardware</option>
+                              <option value="Langue">Langue</option>
+                              <option value="Softskills">Softskills</option>
+                          </select>
+                          <kendo-formhint> Theme Global</kendo-formhint>
+                          <kendo-formerror>Error: Theme is required</kendo-formerror>
+                        </kendo-formfield>
+
+
+                        <kendo-formfield>
+                          <kendo-label for="name">Organisme</kendo-label>
+                          <input type="text" class="form-control" id="organisme" required [(ngModel)]="formation.organisme" name="organisme" #organisme required>
+                          <kendo-formhint> lieu de la formation</kendo-formhint>
+                          <kendo-formerror>Error: Organisme is required</kendo-formerror>
+                        </kendo-formfield>
+
+                        <kendo-formfield>
+                          <kendo-label for="name">Objectif</kendo-label>
+                          <input type="text" class="form-control" id="objectif" required [(ngModel)]="formation.objectif" name="objectif" #objectif required>
+                          <kendo-formhint> Objectif de la formation</kendo-formhint>
+                          <kendo-formerror>Error: Code is required</kendo-formerror>
+                        </kendo-formfield>
+
+                      <br>
+                        <!-- Debut formateur champs  -->
+
+                        <div class="form-group">
+                          <div class="example-config">
+                            Formateur matricule - Selected Value: {{selectedValue}}
+                          </div>
+
+                          <kendo-multicolumncombobox
+                                #list
+                                [data]="collaborateurs"
+                                [listHeight]="300"
+                                [textField]="'matricule'"
+                                [valueField]="'id'"
+                                (valueChange)="handleValueChange($event)"
+                                >
+                            <kendo-combobox-column
+                                    [field]="'matricule'"
+                                    [title]="'Matricule'"
+                                    [width]="200"
+                                >
+                                <ng-template
+                                        kendoMultiColumnComboBoxColumnCellTemplate
+                                        let-dataItem
+                                    >
+                                  <span >{{ dataItem.matricule }}</span>
+
+                                </ng-template>
+                            </kendo-combobox-column>
+                        </kendo-multicolumncombobox>
+                      </div>
+                      <br>
+
+                      <div class="form-group">
+                        <div class="example-config">
+                          Formateur nom- Selected Value: {{selectedValue}}
+                        </div>
+
+                        <kendo-multicolumncombobox
+                              #list
+                              [data]="collaborateurs"
+                              [listHeight]="300"
+                              [textField]="'nom'"
+                              [valueField]="'id'"
+                              (valueChange)="handleValueChange($event)"
+                              >
+                          <kendo-combobox-column
+                                  [field]="'nom'"
+                                  [title]="'Name'"
+                                  [width]="200"
+                              >
+                              <ng-template
+                                      kendoMultiColumnComboBoxColumnCellTemplate
+                                      let-dataItem
+                                  >
+                                <span >{{ dataItem.nom }}</span>
+
+                              </ng-template>
+                          </kendo-combobox-column>
+                      </kendo-multicolumncombobox>
+                    </div>
+
+                      <br>
+                        <div class="form-group">
+                          <div class="example-config">
+                            Formateur prénom - Selected Value: {{selectedValue}}
+                          </div>
+
+                          <kendo-multicolumncombobox
+                                #list
+                                [data]="collaborateurs"
+                                [listHeight]="300"
+                                [textField]="'prenom'"
+                                [valueField]="'id'"
+                                (valueChange)="handleValueChange($event)"
+                                >
+                            <kendo-combobox-column
+                                    [field]="'prenom'"
+                                    [title]="'Prenom'"
+                                    [width]="200"
+                                >
+                                <ng-template
+                                        kendoMultiColumnComboBoxColumnCellTemplate
+                                        let-dataItem
+                                    >
+                                  <span >{{ dataItem.prenom }}</span>
+
+                                </ng-template>
+                            </kendo-combobox-column>
+                        </kendo-multicolumncombobox>
+                      </div>
+                   <!-- Fin formateur champs  -->
+                        <kendo-formfield>
+                          <kendo-label for="name">Date debut de formation</kendo-label>
+                          <input type="date" class="form-control" id="dateFormation" required [(ngModel)]="formation.dateFormation" name="dateFormation">
+                          <kendo-formhint> Date de formation</kendo-formhint>
+                          <kendo-formerror>Hint: Select Date and Time for your appointment</kendo-formerror>
+                      </kendo-formfield>
+
+                      <kendo-formfield>
+                        <kendo-label for="name">Date finale de formation</kendo-label>
+                        <input type="date" class="form-control" id="dateClotureFormation" required [(ngModel)]="formation.dateClotureFormation" name="dateClotureFormation">
+                        <kendo-formhint> Date de formation</kendo-formhint>
+                        <kendo-formerror>Hint: Select Date and Time for your appointment</kendo-formerror>
+                    </kendo-formfield>
+
+                     <kendo-formfield>
+                          <kendo-label for="name">Cout</kendo-label>
+                          <input type="number" class="form-control" id="cout" min="0" required [(ngModel)]="formation.cout" name="cout" #cout required>
+                          <kendo-formhint> Cout </kendo-formhint>
+                          <kendo-formerror>Error: Cout is required</kendo-formerror>
+                        </kendo-formfield>
+
+
+                        <kendo-formfield>
+                          <kendo-label for="name">Nbr de place</kendo-label>
+                          <input type="number" class="form-control" id="nbrPlace" min="0" required [(ngModel)]="formation.nbrPlace" name="nbrPlace" #nbrPlace required>
+                          <kendo-formhint> Nbr de place disponible</kendo-formhint>
+                          <kendo-formerror>Error: Nbr de place is required</kendo-formerror>
+                        </kendo-formfield>
+
+                        <kendo-formfield>
+                        <kendo-label for="status-select">Status:</kendo-label>
+                        <select  type="text" class="form-control" id="status" required [(ngModel)]="formation.status" name="status" #status required>
+                            <option value="">--Please choose an option--</option>
+                            <option value="Ouverte">Ouverte</option>
+                            <option value="Cloturer">Cloturer</option>
+                        </select>
+                        <kendo-formhint> Status </kendo-formhint>
+                        <kendo-formerror>Error: Status is required</kendo-formerror>
+                      </kendo-formfield>
+
+
+                    </form>
+
+                    </div>
+                    <div class="modal-footer">
+                      <button class="k-button k-primary" (click)="onSubmit()">Submit</button>
+                      <button type="button" class="btn btn-light" (click)="onSubmit" (click)="modal.close('Close click')">Close</button>
+                    </div>
+                  </ng-template>
+            </ng-template>
+
+            <!-- Fin Ajouter Formation -->
+
+            <!-- Afficher la liste des formations -->
+
+            <kendo-grid-checkbox-column
+                [width]="45"
+                [headerClass]="{'text-center': true}"
+                [class]="{'text-center': true}"
+                [resizable]="false"
+                [columnMenu]="false"
+                showSelectAll="true"
+            >
+            </kendo-grid-checkbox-column>
+
+            <kendo-grid-command-column title="Action" width="400">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <button *ngIf='!isUSER()' type="button" class="btn btn-success" (click)="open(editFormation, dataItem.id)"><i class="fas fa-edit"></i> Edit</button>
+                <button  type="button" [disabled]="dataItem.nbrPlace == 0" *ngIf="!formation.isInscrit" class="btn btn-outline-dark" (click)="inscription(dataItem.id)"><i class="fas fa-edit"  icon= "reddit"></i> S'inscrire</button>
+                <button *ngIf='!isUSER()' type="button" class="btn btn-light" (click)="goToListParticipant(dataItem.id)"><i class="fas fa-edit"  icon= "reddit"></i>Visualiser</button>
+
+                <!-- Delete Formation -->
+<ng-container *ngIf='!isUSER()'>
+  
+  <button  type="button" *ngIf="!opened" (click)="openDialog()" class="btn btn-danger"   >
+    <span class="k-icon k-i-delete"></span>Delete</button>
+  </ng-container>
+                <kendo-dialog
+                  title="Please confirm"
+                  *ngIf="opened"
+                  (close)="close('cancel', dataItem)"
+                  [minWidth]="250"
+                  [width]="450"
+                >
+                  <p style="margin: 30px; text-align: center;">
+                    Are you sure you want to delete this formation ?
+                  </p>
+                  <kendo-dialog-actions>
+                    <button kendoButton  (click)="close()">No</button>
+                    <button kendoButton  (click)="removeHandler(dataItem.id)">Yes</button>
+                  </kendo-dialog-actions>
+                </kendo-dialog>
+
+                <!-- Fin Delete Formation -->
+
+              </ng-template>
+            </kendo-grid-command-column>
+              <kendo-grid-column
+                field="code"
+                title="code"
+                [width]="120"
+                [class]="{'text-center': true}"
+                [resizable]="false">
+            </kendo-grid-column>
+            <kendo-grid-column field="type" title="Genre" [width]="100">
+            </kendo-grid-column>
+            <kendo-grid-column field="theme" title="Theme" [width]="100">
+            </kendo-grid-column>
+            <kendo-grid-column field="organisme" title="Organisme" [width]="200">
+            </kendo-grid-column>
+            <kendo-grid-column field="objectif" title="Objectif" [width]="100">
+            </kendo-grid-column>
+            <kendo-grid-column field="formateur" title="Formateur" [width]="100">
+            </kendo-grid-column>
+            <kendo-grid-column
+                field="dateDebutFormation"
+                title="Date debut de formation"
+                [width]="100"
+                [class]="{'text-center': true}"
+                [resizable]="false"
+            >
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <span >{{dataItem.dateDebutFormation | date:'yyyy-MM-dd'}}</span>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column
+                field="dateClotureFormation"
+                title="Date cloture de formation"
+                [width]="100"
+                [class]="{'text-center': true}"
+                [resizable]="false"
+                >
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <span >{{dataItem.dateClotureFormation | date:'yyyy-MM-dd'}}</span>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column field="cout" title="cout" [width]="100">
+            </kendo-grid-column>
+            <kendo-grid-column field="nbrPlace" title="nbrPlace" [width]="100">
+            </kendo-grid-column>
+            <kendo-grid-column
+                field="status"
+                title="Status"
+                [width]="100"
+                [class]="{'text-center': true}"
+                [resizable]="false"
+            >
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <span *ngIf="dataItem.status === 'Ouverte'" class="badge badge-success">Ouverte</span>
+                    <span *ngIf="dataItem.status === 'Cloturer'" class="badge badge-danger">Clôturer</span>
+                </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-pdf fileName="Formations.pdf" [repeatHeaders]="true"></kendo-grid-pdf>
+            <kendo-grid-excel fileName="Formations.xlsx"></kendo-grid-excel>
+        </kendo-grid>
+
+        <!-- Fin Affichage de la liste des formations -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Edit Formations -->
+
+  <ng-template #editFormation let-modal>
+    <div class="modal-header">
+
+      <h4 class="modal-title">Edit Formation</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="onEdit()" class="k-form">
+
+        <kendo-formfield >
+          <kendo-label for="name">Code</kendo-label>
+          <input type="text" class="form-control" id="code" required [(ngModel)]="formation.code" name="code" #code required>
+          <kendo-formhint> Code Formation</kendo-formhint>
+          <kendo-formerror>Error: Code is required</kendo-formerror>
+        </kendo-formfield>
+
+        <kendo-formfield>
+          <kendo-label for="name">Type:</kendo-label>
+          <select type="text" class="form-control" id="type" required [(ngModel)]="formation.type" name="type" #type required>
+              <option value="">--Please choose an option--
+              <option value="Interne" selected>Interne
+              <option value="Externe">Externe
+          </select>
+          <kendo-formhint> Type de la formation</kendo-formhint>
+          <kendo-formerror>Error: Type is required</kendo-formerror>
+        </kendo-formfield>
+
+        <kendo-formfield>
+          <kendo-label for="name">Theme:</kendo-label>
+          <select type="text" class="form-control" id="theme" required [(ngModel)]="formation.theme" name="theme" #theme required>
+              <option value="">--Please choose an option--</option>
+              <option value="Software">Software</option>
+              <option value="Hardware">Hardware</option>
+              <option value="Langue">Langue</option>
+              <option value="Softskills">Softskills</option>
+          </select>
+          <kendo-formhint> Theme Global</kendo-formhint>
+          <kendo-formerror>Error: Theme is required</kendo-formerror>
+        </kendo-formfield>
+
+
+        <kendo-formfield>
+          <kendo-label for="name">Organisme</kendo-label>
+          <input type="text" class="form-control" id="organisme" required [(ngModel)]="formation.organisme" name="organisme" #organisme required>
+          <kendo-formhint> lieu de la formation</kendo-formhint>
+          <kendo-formerror>Error: Organisme is required</kendo-formerror>
+        </kendo-formfield>
+
+        <kendo-formfield>
+          <kendo-label for="name">Objectif</kendo-label>
+          <input type="text" class="form-control" id="objectif" required [(ngModel)]="formation.objectif" name="objectif" #objectif required>
+          <kendo-formhint> Objectif de la formation</kendo-formhint>
+          <kendo-formerror>Error: Code is required</kendo-formerror>
+        </kendo-formfield>
+
+      <br>
+        <div class="form-group">
+          <div class="example-config">
+            Formateur matricule - Selected Value: {{selectedValue}}
+          </div>
+
+          <kendo-multicolumncombobox
+                #list
+                [data]="collaborateurs"
+                [listHeight]="300"
+                [textField]="'matricule'"
+                [valueField]="'id'"
+                (valueChange)="handleValueChange($event)"
+                >
+            <kendo-combobox-column
+                    [field]="'matricule'"
+                    [title]="'Matricule'"
+                    [width]="200"
+                >
+                <ng-template
+                        kendoMultiColumnComboBoxColumnCellTemplate
+                        let-dataItem
+                    >
+                  <span >{{ dataItem.matricule }}</span>
+
+                </ng-template>
+            </kendo-combobox-column>
+        </kendo-multicolumncombobox>
+      </div>
+      <br>
+
+      <div class="form-group">
+        <div class="example-config">
+          Formateur nom- Selected Value: {{selectedValue}}
+        </div>
+
+        <kendo-multicolumncombobox
+              #list
+              [data]="collaborateurs"
+              [listHeight]="300"
+              [textField]="'nom'"
+              [valueField]="'id'"
+              (valueChange)="handleValueChange($event)"
+              >
+          <kendo-combobox-column
+                  [field]="'nom'"
+                  [title]="'Name'"
+                  [width]="200"
+              >
+              <ng-template
+                      kendoMultiColumnComboBoxColumnCellTemplate
+                      let-dataItem
+                  >
+                <span >{{ dataItem.nom }}</span>
+
+              </ng-template>
+          </kendo-combobox-column>
+      </kendo-multicolumncombobox>
+    </div>
+
+      <br>
+        <div class="form-group">
+          <div class="example-config">
+            Formateur prénom - Selected Value: {{selectedValue}}
+          </div>
+
+          <kendo-multicolumncombobox
+                #list
+                [data]="collaborateurs"
+                [listHeight]="300"
+                [textField]="'prenom'"
+                [valueField]="'id'"
+                (valueChange)="handleValueChange($event)"
+                >
+            <kendo-combobox-column
+                    [field]="'prenom'"
+                    [title]="'Prenom'"
+                    [width]="200"
+                >
+                <ng-template
+                        kendoMultiColumnComboBoxColumnCellTemplate
+                        let-dataItem
+                    >
+                  <span >{{ dataItem.prenom }}</span>
+
+                </ng-template>
+            </kendo-combobox-column>
+        </kendo-multicolumncombobox>
+      </div>
+   <!-- Fin formateur champs  -->
+   <div class="form-group">
+    <label for="name">Date début de formation</label>
+    <input type="date" class="form-control" id="dateDebutFormation" required [(ngModel)]="formation.dateDebutFormation " name="dateDebutFormation" #dateDebutFormation>
+  </div>
+
+      <kendo-formfield>
+        <kendo-label for="name">Date finale de formation</kendo-label>
+        <input type="date" class="form-control" id="dateClotureFormation" required  [(ngModel)]="formation.dateClotureFormation "  name="dateClotureFormation" >
+        <kendo-formhint> Date de formation</kendo-formhint>
+        <kendo-formerror>Hint: Select Date and Time for your appointment</kendo-formerror>
+    </kendo-formfield>
+
+     <kendo-formfield>
+          <kendo-label for="name">Cout</kendo-label>
+          <input type="number" class="form-control" id="cout" min="0" required [(ngModel)]="formation.cout" name="cout" #cout required>
+          <kendo-formhint> Cout </kendo-formhint>
+          <kendo-formerror>Error: Cout is required</kendo-formerror>
+        </kendo-formfield>
+
+
+        <kendo-formfield>
+          <kendo-label for="name">Nbr de place</kendo-label>
+          <input type="number" class="form-control" id="nbrPlace" min="0" required [(ngModel)]="formation.nbrPlace" name="nbrPlace" #nbrPlace required>
+          <kendo-formhint> Nbr de place disponible</kendo-formhint>
+          <kendo-formerror>Error: Nbr de place is required</kendo-formerror>
+        </kendo-formfield>
+
+        <kendo-formfield>
+        <kendo-label for="status-select">Status:</kendo-label>
+        <select  type="text" class="form-control" id="status" required [(ngModel)]="formation.status" name="status" #status required>
+            <option value="">--Please choose an option--</option>
+            <option value="Ouverte">Ouverte</option>
+            <option value="Cloturer">Cloturer</option>
+        </select>
+        <kendo-formhint> Status </kendo-formhint>
+        <kendo-formerror>Error: Status is required</kendo-formerror>
+      </kendo-formfield>
+
+
+    </form>
+
+    </div>
+    <div class="modal-footer">
+      <button class="k-button k-primary" (click)="onEdit()">Submit</button>
+      <button type="button" class="btn btn-light" (click)="onEdit" (click)="modal.close('Close click')">Close</button>
+    </div>
+  </ng-template>
+<!-- Fin Edit Formations -->

@@ -1,0 +1,30 @@
+<div class="modal-body">
+  <form class="" (ngSubmit)="addActiviteForm.valid && submit()" novalidate [formGroup]="addActiviteForm">
+    <div class="form-group">
+      <label>Nom d'activite</label>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Nom de l'activité" formControlName="nomActivite">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputAddress2">Direction</label>
+      <select name="role" id="role"  class="custom-select d-block w-100" formControlName="direction" data-placeholder="Select">
+          <option *ngFor="let direction of directionsList" [ngValue]="direction">
+            {{direction.nomDirection}}
+          </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="inputAddress2">Responsable</label>
+      <select name="role" id="role"  class="custom-select d-block w-100" formControlName="responsable" data-placeholder="Select">
+          <option *ngFor="let user of users" [ngValue]="user">
+            {{user.username}}
+          </option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-success m-t-15 waves-effect">AJOUTER</button>
+  </form>
+</div>
+<!--           <div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+</div> -->

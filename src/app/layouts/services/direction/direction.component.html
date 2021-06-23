@@ -1,0 +1,64 @@
+ <div class="card h-100">
+    <div class="card-header">
+      <h4>Directions</h4>
+      <div class="card-header-action">
+        <button type="button" class="btn btn-success" (click)="open(addDirection)"><i class="fas fa-plus"></i> Ajouter</button>
+      </div>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-striped table-md" id="table-1">
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Responsable</th>
+            <th>Action</th>
+          </tr>
+          <tr *ngFor="let direction of directions | slice: (page-1) * pageSize : page * pageSize; index as i">
+            <td>{{direction.id}}</td>
+            <td>{{direction.nomDirection}}</td>
+            <td>{{direction.userDTO.username}}</td>
+            <td><a href="javascript:void(0)" class="btn btn-outline-secondary" (click)="openAct(displayActivities, direction)"><i class="far fa-plus"></i> Liste des activités</a></td>
+            <td><a href="javascript:void(0)" class="btn btn-outline-secondary" (click)="open(editDirection, direction)"><i class="far fa-edit"></i> Edit</a></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer text-right">
+      <nav class="d-inline-block">
+        <ngb-pagination [collectionSize]="directionsSize" [(page)]="page" [maxSize]="5" [boundaryLinks]="true"
+        [pageSize]="pageSize" class="d-flex justify-content-center"></ngb-pagination>
+      </nav>
+    </div>
+  </div>
+
+<ng-template #addDirection let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="formModal">Ajouter une direction</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-add-direction></app-add-direction>
+</ng-template>
+
+<ng-template #editDirection let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="formModal">Modifier une direction</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-edit-direction [direction]="directionObject"></app-edit-direction>
+</ng-template>
+
+<ng-template #displayActivities let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="formModal">Liste des activités</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <br><br>
+  <app-display-activities [direction]="directionObject"></app-display-activities>
+</ng-template>

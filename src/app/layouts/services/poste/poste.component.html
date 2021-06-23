@@ -1,0 +1,52 @@
+<div class="card h-100">
+    <div class="card-header">
+      <h4>Postes</h4>
+      <div class="card-header-action">
+        <button type="button" class="btn btn-success" (click)="open(addPoste)"><i class="fas fa-plus"></i> Ajouter</button>
+      </div>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-striped table-md">
+          <tr>
+            <th>#</th>
+            <th>Nom Poste</th>
+            <th>Action</th>
+          </tr>
+          <tr *ngFor="let poste of postes | slice: (pagePoste-1) * pageSize : pagePoste * pageSize; index as i">
+            <td>{{ i }}</td>
+            <td>{{poste.nomPoste}}</td>
+            <td><a href="javascript:void(0)" class="btn btn-outline-secondary" (click)="open(editPoste, poste)"><i class="far fa-edit"></i> Edit</a></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer text-right">
+      <nav class="d-inline-block">
+        <ngb-pagination [collectionSize]="postesSize" [(page)]="pagePoste" [maxSize]="4" [boundaryLinks]="true"
+        [pageSize]="pageSize" class="d-flex justify-content-center"></ngb-pagination>
+      </nav>
+    </div>
+  </div>
+  
+  
+  <ng-template #addPoste let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="formModal">Ajouter une Poste</h5>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <app-add-poste></app-add-poste>
+  </ng-template>
+  
+  <ng-template #editPoste let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="formModal">Modifier une Poste</h5>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <app-edit-poste [poste]="posteObject"></app-edit-poste>
+  </ng-template> 
+  

@@ -1,0 +1,318 @@
+<div class="section-body">
+  <div class="row mt-sm-4">
+    <div class="col-12 col-md-12 col-lg-6">
+      <div class="card author-box">
+        <div class="card-body">
+          <div class="author-box-center">
+            <!-- <img alt="image" src="assets/img/users/user-3.png" class="rounded-circle author-box-picture"> -->
+            <figure class="avatar mr-2 avatar-xl" data-initial="CB"></figure>
+            <div class="clearfix"></div>
+            <div class="author-box-name">
+              <a href="javascript:void(0)">{{entretien?.employee?.nom}} {{entretien?.employee?.prenom}}</a>
+            </div>
+            <div class="author-box-job">Software Designer</div>
+            <div class="py-4">
+              <p class="clearfix">
+                <span class="float-left">
+                  Date de recrutement
+                </span>
+                <span class="float-right text-muted">
+                  {{entretien?.employee?.dateEmbauche}}
+                </span>
+              </p>
+              <p class="clearfix">
+                <span class="float-left">
+                  Direction
+                </span>
+                <span class="float-right text-muted">
+                  {{entretien?.employee?.direction?.nomDirection}}
+                </span>
+              </p>
+              <p class="clearfix">
+                <span class="float-left">
+                  Activité
+                </span>
+                <span class="float-right text-muted">
+                  {{entretien?.employee?.activite?.nomActivite}}
+                </span>
+              </p>
+              <p class="clearfix">
+                <span class="float-left">
+                  Equipe
+                </span>
+                <span class="float-right text-muted">
+                  {{entretien?.employee?.equipe?.nomEquipe}}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer text-right">
+          <button routerLink="/profile" class="btn btn-success">Profile</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+<!--           <div class="media">
+            <img class="mr-3" src="assets/img/image-64.png" alt="Generic placeholder image">
+            <div class="media-body">
+              <h5 class="mt-0">Media heading</h5>
+              <p class="mb-0">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
+                condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+            </div>
+          </div> -->
+          <h4>Bilan de l'année passée</h4>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <textarea class="form-control">{{entretien?.cmtEmployee}}</textarea>
+          </div>
+          <div class="form-group">
+            <label>Commentaire Evaluateur</label>
+            <textarea class="form-control">{{entretien?.cmtEvaluateur}}</textarea>
+          </div>
+          <div class="form-group">
+            <label>Points Forts</label>
+            <textarea class="form-control">{{entretien?.pointsFort}}</textarea>
+          </div>
+          <div class="form-group">
+            <label>Pistes d'amélioration</label>
+            <textarea class="form-control">{{entretien?.pistesAmelioration}}</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4>Implication, engagement, sens du collectif</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-md">
+              <tr>
+                <th>Libellé Objectif</th>
+                <th>Poids</th>
+                <th>Valeur cible</th>
+                <th>Note</th>
+                <th>Commentaire(s)</th>
+                <th>Action</th>
+              </tr>
+              <tr>
+                <td><textarea class="form-control"></textarea></td>
+                <td><input type="number" class="form-control"></td>
+                <td><input type="text" class="form-control"></td>
+                <td><input type="number" class="form-control"></td>
+                <td><textarea class="form-control"></textarea></td>
+                <td class="buttons">
+                  <a href="#" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
+                  <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash-alt"></i></a>
+                </td>
+              </tr>
+              <tr>
+                <td><textarea class="form-control"></textarea></td>
+                <td><input type="number" class="form-control"></td>
+                <td><input type="text" class="form-control"></td>
+                <td><input type="number" class="form-control"></td>
+                <td><textarea class="form-control"></textarea></td>
+                <td class="buttons">
+                  <a href="#" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
+                  <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash-alt"></i></a>
+                </td>
+              </tr>
+              <tr>
+                <td><textarea class="form-control"></textarea></td>
+                <td><input type="number" class="form-control"></td>
+                <td><input type="text" class="form-control"></td>
+                <td><input type="number" class="form-control"></td>
+                <td><textarea class="form-control"></textarea></td>
+                <td class="buttons">
+                  <a href="#" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
+                  <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash-alt"></i></a>
+                </td>
+              </tr>
+              <tr>
+                <td><textarea class="form-control"></textarea></td>
+                <td><input type="number" class="form-control"></td>
+                <td><input type="text" class="form-control"></td>
+                <td><input type="number" class="form-control"></td>
+                <td><textarea class="form-control"></textarea></td>
+                <td class="buttons">
+                  <a href="#" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
+                  <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash-alt"></i></a>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4>Objectifs collectifs</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-md">
+              <tr>
+                <th>Libellé Objectif</th>
+                <th>Poids</th>
+                <th>Valeur cible</th>
+                <th>Note</th>
+                <th>Commentaire(s)</th>
+                <th>Action</th>
+              </tr>
+              <tr>
+                <td><textarea class="form-control"></textarea></td>
+                <td><input type="number" class="form-control"></td>
+                <td><input type="text" class="form-control"></td>
+                <td><input type="number" class="form-control"></td>
+                <td><textarea class="form-control"></textarea></td>
+                <td class="buttons">
+                  <a href="#" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
+                  <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash-alt"></i></a>
+                </td>
+              </tr>
+              <tr>
+                <td><textarea class="form-control"></textarea></td>
+                <td><input type="number" class="form-control"></td>
+                <td><input type="text" class="form-control"></td>
+                <td><input type="number" class="form-control"></td>
+                <td><textarea class="form-control"></textarea></td>
+                <td class="buttons">
+                  <a href="#" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
+                  <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash-alt"></i></a>
+                </td>
+              </tr>
+              <tr>
+                <td><textarea class="form-control"></textarea></td>
+                <td><input type="number" class="form-control"></td>
+                <td><input type="text" class="form-control"></td>
+                <td><input type="number" class="form-control"></td>
+                <td><textarea class="form-control"></textarea></td>
+                <td class="buttons">
+                  <a href="#" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
+                  <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash-alt"></i></a>
+                </td>
+              </tr>
+              <tr>
+                <td><textarea class="form-control"></textarea></td>
+                <td><input type="number" class="form-control"></td>
+                <td><input type="text" class="form-control"></td>
+                <td><input type="number" class="form-control"></td>
+                <td><textarea class="form-control"></textarea></td>
+                <td class="buttons">
+                  <a href="#" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
+                  <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash-alt"></i></a>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4>Objectifs Individuels</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-md">
+              <tr>
+                <th>Libellé Objectif</th>
+                <th>Poids</th>
+                <th>Valeur cible</th>
+                <th>Note</th>
+                <th>Commentaire(s)</th>
+                <th>Action</th>
+              </tr>
+              <tr>
+                <td><textarea class="form-control"></textarea></td>
+                <td><input type="number" class="form-control"></td>
+                <td><input type="text" class="form-control"></td>
+                <td><input type="number" class="form-control"></td>
+                <td><textarea class="form-control"></textarea></td>
+                <td class="buttons">
+                  <a href="#" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
+                  <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash-alt"></i></a>
+                </td>
+              </tr>
+              <tr>
+                <td><textarea class="form-control"></textarea></td>
+                <td><input type="number" class="form-control"></td>
+                <td><input type="text" class="form-control"></td>
+                <td><input type="number" class="form-control"></td>
+                <td><textarea class="form-control"></textarea></td>
+                <td class="buttons">
+                  <a href="#" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
+                  <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash-alt"></i></a>
+                </td>
+              </tr>
+              <tr>
+                <td><textarea class="form-control"></textarea></td>
+                <td><input type="number" class="form-control"></td>
+                <td><input type="text" class="form-control"></td>
+                <td><input type="number" class="form-control"></td>
+                <td><textarea class="form-control"></textarea></td>
+                <td class="buttons">
+                  <a href="#" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
+                  <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash-alt"></i></a>
+                </td>
+              </tr>
+              <tr>
+                <td><textarea class="form-control"></textarea></td>
+                <td><input type="number" class="form-control"></td>
+                <td><input type="text" class="form-control"></td>
+                <td><input type="number" class="form-control"></td>
+                <td><textarea class="form-control"></textarea></td>
+                <td class="buttons">
+                  <a href="#" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
+                  <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash-alt"></i></a>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4>Souhait d'évolution de carrière</h4>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <textarea class="form-control">{{entretien?.cmtEvolution}}</textarea>
+          </div>
+          <div class="form-group">
+            <label>Avis du Manager</label>
+            <textarea class="form-control">{{entretien?.avisManager}}</textarea>
+          </div>
+          <div class="form-group">
+            <label>Appréciation Générale</label>
+            <textarea class="form-control">{{entretien?.appreciation}}</textarea>
+          </div>
+          <div class="form-group">
+            <label>Commentaire(s)</label>
+            <textarea class="form-control">{{entretien?.cmtEvaluee}}</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

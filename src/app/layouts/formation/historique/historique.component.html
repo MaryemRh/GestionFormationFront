@@ -1,0 +1,135 @@
+<div class="section-body">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+              <h4>Historique des formations</h4>
+              <div class="card-header-action">
+              </div>
+            </div>
+            <div class="card-body">
+    <kendo-grid
+    
+    [kendoGridBinding]="formation"    
+    kendoGridSelectBy="id"           
+    [selectedKeys]="mySelection"     
+    [pageSize]="gridState.take" 
+    [skip]="gridState.skip" 
+    [sort]="gridState.sort"
+    [pageable]="{buttonCount: buttonCount, info: info,type: type, pageSizes: [5, 10, 15, 20],previousNext: previousNext}"
+    [sortable]="true"
+    [filterable]="true"
+    [groupable]="true"
+    [reorderable]="true"
+    [resizable]="true"
+    [navigable]="true"
+    (dataStateChange)="onStateChange($event)"
+    (update)="updateActivities($event)" 
+    (remove)="removeHandler($event)"
+    [columnMenu]="{ filter: true }">  
+  
+    <ng-template kendoGridToolbarTemplate #content let-modal>
+       <input placeholder="Search in all columns..." kendoTextBox (input)="onFilter($event.target.value)"/>
+        <button kendoGridPDFCommand icon="file-pdf" style="float:right;">Export to PDF</button>
+        <button type="button" kendoGridExcelCommand icon="file-excel" style="float:right;">Export to Excel</button>
+     
+    </ng-template>
+ 
+  
+    <kendo-grid-checkbox-column
+        [width]="45"
+        [headerClass]="{'text-center': true}"
+        [class]="{'text-center': true}"
+        [resizable]="false"
+        [columnMenu]="false"
+        showSelectAll="true">
+    </kendo-grid-checkbox-column>
+   
+
+    <kendo-grid-column-group title="Historique des formations" [columnMenu]="false">
+      
+                <kendo-grid-column
+                    field="status"
+                    title="Status"
+                    [width]="100"
+                    [class]="{'text-center': true}"
+                    [resizable]="false"
+                >
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <span *ngIf="dataItem.status === 'Cloturer'" class="badge badge-danger">Clôturer</span>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column
+                field="dateDebutFormation"
+                title="Date debut de formation"
+                [width]="100"
+                [class]="{'text-center': true}"
+                [resizable]="false"
+            >
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <span >{{dataItem.dateDebutFormation | date:'yyyy-MM-dd'}}</span>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column
+            field="dateClotureFormation"
+            title="Date debut de formation"
+            [width]="100"
+            [class]="{'text-center': true}"
+            [resizable]="false"
+            >
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <span >{{dataItem.dateClotureFormation | date:'yyyy-MM-dd'}}</span>
+            </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column
+            field="code"
+            title="code"
+            [width]="120"
+            [class]="{'text-center': true}"
+            [resizable]="false">
+            </kendo-grid-column>
+            <kendo-grid-column field="type" title="Genre" [width]="100">
+            </kendo-grid-column>
+            <kendo-grid-column field="theme" title="Theme" [width]="100">
+            </kendo-grid-column>
+            <kendo-grid-column field="organisme" title="Organisme" [width]="200">
+            </kendo-grid-column>
+            <kendo-grid-column field="objectif" title="Objectif" [width]="100">
+            </kendo-grid-column>
+            <kendo-grid-column field="formateur" title="Formateur" [width]="100">
+            </kendo-grid-column>
+           
+            
+            <kendo-grid-column field="cout" title="cout" [width]="100">
+            </kendo-grid-column>
+            <kendo-grid-column field="nbrPlace" title="nbrPlace" [width]="100">
+            </kendo-grid-column>
+            
+
+
+    </kendo-grid-column-group> 
+
+   <kendo-grid-pdf fileName="Activites.pdf" [allPages]="true" paperSize="A4" [repeatHeaders]="true" [landscape]="true">
+      <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
+      <ng-template kendoGridPDFTemplate let-pageNum="pageNum" let-totalPages="totalPages">
+       <div class="page-template">
+          <div class="header">
+            <div style="float: right">Page {{ pageNum }} of {{ totalPages }}</div>
+            Multi-page grid with automatic page breaking
+          </div>
+          <div class="footer">
+            Page {{ pageNum }} of {{ totalPages }}
+          </div>
+        </div>
+      </ng-template>
+  </kendo-grid-pdf> 
+  <kendo-grid-excel fileName="HistoriqueFormations.xlsx"></kendo-grid-excel>
+  </kendo-grid>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>

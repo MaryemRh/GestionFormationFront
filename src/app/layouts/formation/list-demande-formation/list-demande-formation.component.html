@@ -1,0 +1,111 @@
+<div class="section-body">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+              <h4>Liste des demandes des formations</h4>
+              <div class="card-header-action">
+              </div>
+            </div>
+            <div class="card-body">
+            <kendo-grid
+            [kendoGridBinding]="demandeFormation"
+            kendoGridSelectBy="id"
+            [pageSize]="gridState.take" 
+            [skip]="gridState.skip" 
+            [sort]="gridState.sort"
+            [pageable]="{buttonCount: buttonCount, info: info,type: type, pageSizes: [5, 10, 15, 20],previousNext: previousNext}"
+            [selectedKeys]="mySelection"
+            [sortable]="true"
+            [filterable]="true"
+            [groupable]="true"
+            [reorderable]="true"
+            [resizable]="true"
+
+            (dataStateChange)="onStateChange($event)"
+            (remove)="removeHandler($event)"
+            [columnMenu]="{ filter: true }"
+            [navigable]="true">
+
+
+            <ng-template kendoGridToolbarTemplate>
+                <input kendoTextBox placeholder="Search in all columns..." kendoTextBox (input)="onFilter($event.target.value)" />
+                <button  kendoGridPDFCommand icon="file-pdf" style="float:right;">Export to PDF</button>
+                <button  type="button" kendoGridExcelCommand icon="file-excel" style="float:right;">Export to Excel</button>
+            
+            </ng-template>
+
+            <kendo-grid-checkbox-column
+                [width]="45"
+                [headerClass]="{'text-center': true}"
+                [class]="{'text-center': true}"
+                [resizable]="false"
+                [columnMenu]="false"
+                showSelectAll="true">
+            </kendo-grid-checkbox-column>
+
+            <kendo-grid-command-column title="Action" width="180">
+                <ng-template kendoGridCellTemplate let-isNew="isNew">
+                <button kendoGridRemoveCommand type="button" icon="clear" >Remove</button>
+                </ng-template>
+            </kendo-grid-command-column>
+
+            <kendo-grid-column-group title="Liste des demandes de formation" [columnMenu]="false">
+                
+            <kendo-grid-column title="ID"  field="id" [width]="90"></kendo-grid-column>
+            <kendo-grid-column title="Action" field="status" [width]="200">
+            <ng-template kendoGridCellTemplate let-rowValue>
+                <button type="button" *ngIf="!opened && ((rowValue.approved  && rowValue.status ==='EnAttend' && !(rowValue.username===currentUser)) || (!rowValue.approved && rowValue.status ==='EnAttend' && rowValue.username===currentUser) )" (click)="openDialog(rowValue)" class="btn btn-danger"   > 
+                    <span class="k-icon k-i-primary"></span>Approuver </button>
+                  <kendo-dialog
+                    title="Please confirm"
+                    *ngIf="opened"
+                    (close)="close('cancel', dataItem)"
+                    [minWidth]="250"
+                    [width]="450"
+                  >
+                    <p style="margin: 30px; text-align: center;">
+                      Are you sure you want to approve this formation ?
+                    </p>
+                    <kendo-dialog-actions>
+                      <button kendoButton  (click)="approuveFormation(no)">Refuser</button>
+                      <button kendoButton  (click)="approuveFormation(yes)">Accepter</button>
+                      <!-- <button kendoGridRemoveCommand (click)="removeHandler()" primary="true">Yes</button> -->
+                    </kendo-dialog-actions>
+                  </kendo-dialog>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column title="status" field="status" [width]="200"></kendo-grid-column>
+            <kendo-grid-column title="priorite" field="priorite" [width]="200"></kendo-grid-column>
+            <kendo-grid-column title="besoins" field="besoins"  [width]="200"></kendo-grid-column>
+            <kendo-grid-column title="titre" field="titre"  [width]="200"></kendo-grid-column>
+            <kendo-grid-column title="description" field="description" [width]="200"></kendo-grid-column>
+            <kendo-grid-column title="theme" field="theme" [width]="200"></kendo-grid-column>
+            <kendo-grid-column title="dateEmission" field="dateEmission" filter="date" [width]="200"></kendo-grid-column>
+            <kendo-grid-column title="Nom user" field="nomUser" [width]="200"></kendo-grid-column>
+            <kendo-grid-column title="Prenom user" field="prenomUser" [width]="200"></kendo-grid-column>
+    
+        </kendo-grid-column-group> 
+
+            <kendo-grid-pdf fileName="actia.pdf" [allPages]="true" paperSize="A4" [repeatHeaders]="true" [landscape]="true">
+            <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
+            <ng-template kendoGridPDFTemplate let-pageNum="pageNum" let-totalPages="totalPages">
+            <div class="page-template">
+                <div class="header">
+                    <div style="float: right">Page {{ pageNum }} of {{ totalPages }}</div>
+                    Multi-page grid with automatic page breaking
+                </div>
+                <div class="footer">
+                    Page {{ pageNum }} of {{ totalPages }}
+                </div>
+                </div>
+            </ng-template>
+            </kendo-grid-pdf> 
+            <kendo-grid-excel fileName="demandeFormation.xlsx"></kendo-grid-excel>
+            </kendo-grid> 
+            </div>
+            </div>
+            </div>
+            </div>
+
+</div>

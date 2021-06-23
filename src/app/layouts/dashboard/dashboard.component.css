@@ -1,0 +1,5 @@
+@media print {
+    kendo-chart {
+      width: 200mm;
+    }
+  }

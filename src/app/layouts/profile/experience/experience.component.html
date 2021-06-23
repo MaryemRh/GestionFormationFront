@@ -1,0 +1,103 @@
+<div class="card">
+  <div class="card-header">
+    <h4>Expérience professionnelle </h4>
+  </div>
+  
+  <div class="card-body" *ngFor="let item of experiences">
+    <!-- <div class="py-4"> -->
+    <p class="clearfix">
+      <span class="float-left">
+        {{item.dateDepart | date}} à {{item.dateEmbauche | date}}
+      </span>
+      
+    </p>
+    <div class="clearfix">
+      <span class="float-left">
+       <p class="text-bold">Poste</p> 
+      </span>
+      <span class="float-right text-muted">
+        {{item.poste}}
+      </span>
+    </div>
+    <p class="clearfix">
+      <span class="float-left">
+        Company
+      </span>
+      <span class="float-right text-muted">
+        {{item.company}}
+      </span>
+    </p>
+    <p class="clearfix">
+      <span class="float-left">
+        Tasks
+      </span>
+      <span class="float-right text-muted">
+        {{item.tasks}}
+      </span>
+    </p>
+    
+    
+    <!-- </div> -->
+  </div>
+  <div class="card-footer text-right">
+    <button class="btn btn-success" (click)="openScrollableContent(longContent)" kendoButton>Ajouter</button>
+    <button class="btn btn-light" (click)="openScrollableContent(longContent)" kendoButton>Update</button>
+
+  </div>
+
+</div>
+
+<ng-template #longContent let-modal>
+  <div class="modal-header">
+
+    <h4 class="modal-title">Add Employee</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="onAddExperience()" class="k-form">
+      <kendo-formfield>
+        <kendo-label for="name">Poste</kendo-label>
+        <input type="text" class="form-control" id="poste" [(ngModel)]="experience.poste" name="poste" #poste required>
+        <kendo-formhint> poste</kendo-formhint>
+        <kendo-formerror>Error: poste is required</kendo-formerror>
+      </kendo-formfield>
+
+      <kendo-formfield>
+        <kendo-label for="name">Company</kendo-label>
+        <input type="text" class="form-control" id="company" [(ngModel)]="experience.company" name="company" #company
+          required>
+        <kendo-formhint> Nom</kendo-formhint>
+        <kendo-formerror>Error: Nom is required</kendo-formerror>
+      </kendo-formfield>
+      <kendo-formfield>
+        <kendo-label for="name">Tasks</kendo-label>
+        <input type="text" class="form-control" id="task" [(ngModel)]="experience.tasks" name="task" #task required>
+        <kendo-formhint> Tasks</kendo-formhint>
+        <kendo-formerror>Error: Tasks is required</kendo-formerror>
+      </kendo-formfield>
+
+      <kendo-formfield>
+        <kendo-label for="name">Date de embauche</kendo-label>
+        <input type="date" class="form-control" id="dateEmbauche" [(ngModel)]="experience.dateEmbauche"
+          name="dateEmbauche" #dateEmbauche required>
+        <kendo-formhint> Date de embauche</kendo-formhint>
+        <kendo-formerror>Error: Date de embauche is required</kendo-formerror>
+      </kendo-formfield>
+      <kendo-formfield>
+        <kendo-label for="name">Date de Départ</kendo-label>
+        <input type="date" class="form-control" id="dateDepart" [(ngModel)]="experience.dateDepart" name="dateDepart"
+          #dateDepart required>
+        <kendo-formhint> Date de Départ</kendo-formhint>
+        <kendo-formerror>Error: Date de Départ is required</kendo-formerror>
+      </kendo-formfield>
+
+      <div class="modal-footer">
+        <button class="k-button k-primary" type="submit">Submit</button>
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+      </div>
+
+    </form>
+  </div>
+</ng-template>

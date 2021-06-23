@@ -1,0 +1,63 @@
+<div class="main-sidebar sidebar-style-2">
+  <aside id="sidebar-wrapper">
+    <div class="sidebar-brand">
+      <a href="index.html"> <img alt="image" src="assets/img/logo.png" class="header-logo" /></a>
+    </div>
+    <ul class="sidebar-menu">
+      <li class="menu-header"></li>
+      <li  class="dropdown active" [hidden]="isUSER()">
+        <a [routerLink]="['/dashboard']" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+      </li>
+      <li  class="dropdown" [ngClass]="{'toggled':activeMenu == 'parametres'}" (click)="openItem('parametres')" [hidden]="isUSER()">
+        <a href="javascript:void(0);" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="sliders"></i><span>Paramétres</span></a>
+        <ul class="dropdown-menu" [ngClass]="{'d-block':activeMenu == 'parametres'}">
+          <li><a class="nav-link" [routerLink]="['/users']">Effectif</a></li>
+          <li><a class="nav-link" [routerLink]="['/notation']">Système de notation</a></li>
+          <li><a class="nav-link" [routerLink]="['/services']">Services</a></li>
+        </ul>
+      </li>
+       <li class="dropdown"  [ngClass]="{'toggled':activeMenu == 'formation'}" (click)="openItem('formation')">
+        <a href="javascript:void(0);" class="menu-toggle nav-link has-dropdown"><i data-feather="airplay"></i><span>Formation </span></a>
+        <ul class="dropdown-menu" [ngClass]="{'d-block':activeMenu == 'formation'}">
+          <li ><a class="nav-link" [routerLink]="['/formations']">Liste des formations</a></li>
+          <li><a class="nav-link" [routerLink]="['/demandeFormations']">Demande des formations</a></li>
+          <li><a class="nav-link" [routerLink]="['/ListDemandeFormations']">Liste des demandes</a></li>
+          <li *ngIf='!isUSER()'><a class="nav-link" [routerLink]="['/historique']">Historique des formations</a></li>
+          <li><a class="nav-link" [routerLink]="['/sessions']">Session des formations</a></li>
+        </ul>
+      </li> 
+      
+      <li class="dropdown" [ngClass]="{'toggled':activeMenu == 'evaluation'}" (click)="openItem('evaluation')">
+        <a href="javascript:void(0);" class="menu-toggle nav-link has-dropdown"><i data-feather="edit"></i><span>Evaluation</span></a>
+        <ul class="dropdown-menu" [ngClass]="{'d-block':activeMenu == 'evaluation'}">
+          <li><a class="nav-link" [routerLink]="['/evaluation']">Campagnes</a></li>
+          <li><a class="nav-link" [routerLink]="['/evaluation']">Objectifs</a></li>
+        </ul>
+      </li>
+      <!-- <li class="menu-header">Evaluation</li>
+      <li class="dropdown">
+        <a href="javascript:void(0)" class="menu-toggle nav-link has-dropdown"><i data-feather="copy"></i><span>Basic
+            Components</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="alert.html">Alert</a></li>
+          <li><a class="nav-link" href="badge.html">Badge</a></li>
+          <li><a class="nav-link" href="breadcrumb.html">Breadcrumb</a></li>
+          <li><a class="nav-link" href="buttons.html">Buttons</a></li>
+          <li><a class="nav-link" href="collapse.html">Collapse</a></li>
+          <li><a class="nav-link" href="dropdown.html">Dropdown</a></li>
+          <li><a class="nav-link" href="checkbox-and-radio.html">Checkbox &amp; Radios</a></li>
+          <li><a class="nav-link" href="list-group.html">List Group</a></li>
+          <li><a class="nav-link" href="media-object.html">Media Object</a></li>
+          <li><a class="nav-link" href="navbar.html">Navbar</a></li>
+          <li><a class="nav-link" href="pagination.html">Pagination</a></li>
+          <li><a class="nav-link" href="popover.html">Popover</a></li>
+          <li><a class="nav-link" href="progress.html">Progress</a></li>
+          <li><a class="nav-link" href="tooltip.html">Tooltip</a></li>
+          <li><a class="nav-link" href="flags.html">Flag</a></li>
+          <li><a class="nav-link" href="typography.html">Typography</a></li>
+        </ul>
+      </li> -->
+    </ul>
+  </aside>
+</div>

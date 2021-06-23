@@ -1,0 +1,70 @@
+<div class="card h-100">
+  <div class="card-header">
+    <h4>Activités</h4>
+    <div class="card-header-action">
+      <button type="button" class="btn btn-success" (click)="open(addActivite)"><i class="fas fa-plus"></i> Ajouter</button>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-striped table-md">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Nom direction</th>
+          <th>Responsable</th>
+          <th>Action</th>
+        </tr>
+        <tr *ngFor="let activite of activites | slice: (pageActivite-1) * pageSize : pageActivite * pageSize; index as i">
+          <td>{{ activite.id }}</td>
+          <td>{{activite.nomActivite}}</td>
+          <td>{{activite.direction.nomDirection}}</td>
+          <td>{{activite.userDTO.username}}
+          </td>
+          <td><a href="javascript:void(0)" class="btn btn-outline-secondary" (click)="openAct(displayEquipes, activite)"><i class="far fa-plus"></i> Liste des équipes</a></td>
+          <td><a href="javascript:void(0)" class="btn btn-outline-secondary" (click)="open(editActivite, activite)"><i class="far fa-edit"></i> Edit</a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer text-right">
+    <nav class="d-inline-block">
+      <ngb-pagination [collectionSize]="activitesSize" [(page)]="pageActivite" [maxSize]="5" [boundaryLinks]="true"
+      [pageSize]="pageSize" class="d-flex justify-content-center"></ngb-pagination>
+    </nav>
+  </div>
+</div>
+
+
+<ng-template #addActivite let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="formModal">Ajouter une activite</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-add-activite></app-add-activite>
+</ng-template>
+
+
+<ng-template #editActivite let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="formModal">Modifier une activite</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-edit-activite [activite]="activiteObject"></app-edit-activite>
+</ng-template>
+
+<ng-template #displayEquipes let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="formModal">Liste des Equipes</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <br><br>
+  <app-display-equipe [equipe]="activiteObject"></app-display-equipe>
+</ng-template>
+

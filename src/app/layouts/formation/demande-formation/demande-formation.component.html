@@ -1,0 +1,72 @@
+<div class="example">
+    <div style="width: 400px;">
+    <form (ngSubmit)="onSubmit()" class="k-form k-form-horizontal"  >
+        <fieldset class="k-form-fieldset">
+            <br><br>
+            <h2 class="k-form-legend">Create Demande de Formation</h2>
+           <br>
+            <kendo-formfield >            
+                <kendo-label for="name">Priorité:</kendo-label>
+                <input type="number" class="form-control" id="priorite" min="0"  max="5" required [(ngModel)]="demandeFormation.priorite" name="priorite" #priorite required>
+                <kendo-formhint> Priorité</kendo-formhint>
+                <kendo-formerror>Error: priorité is required</kendo-formerror>
+            </kendo-formfield>
+            
+            <kendo-formfield>
+                <kendo-label for="name">Date d'émission:</kendo-label>
+                <input type="date" class="form-control" id="dateEmission" required [(ngModel)]="demandeFormation.dateEmission" name="dateEmission" #dateEmission required>
+                <kendo-formhint> Date d'émission</kendo-formhint>
+                <kendo-formerror>Error: date is required</kendo-formerror>
+            </kendo-formfield>
+  
+            <kendo-formfield>          
+                <kendo-label for="name">Besoins:</kendo-label>
+                <input type="text" class="form-control" id="besoins" maxlength="255" required [(ngModel)]="demandeFormation.besoins" name="besoins" #besoins required>
+                <kendo-formhint>Saisir les besoins,vous avez 255 lettres à saisir</kendo-formhint>
+                <kendo-formerror>Error: besoins is required</kendo-formerror>
+            </kendo-formfield>
+  
+            <kendo-formfield>          
+                <kendo-label for="name">Titre:</kendo-label>
+                <input type="text" class="form-control" id="titre" required [(ngModel)]="demandeFormation.titre" name="titre" #titre required>
+                <kendo-formhint> Titre</kendo-formhint>
+                <kendo-formerror>Error: Titre is required</kendo-formerror>
+            </kendo-formfield>
+  
+            <kendo-formfield>          
+                <kendo-label for="name">Description:</kendo-label>
+                <input type="text" class="form-control" id="description" required [(ngModel)]="demandeFormation.description" name="description" #description required>
+                <kendo-formhint> Description</kendo-formhint>
+                <kendo-formerror>Error: Description is required</kendo-formerror>
+            </kendo-formfield>
+  
+            <kendo-formfield>          
+                <kendo-label for="name">Theme:</kendo-label>
+                <input type="text" class="form-control" id="theme" required [(ngModel)]="demandeFormation.theme" name="theme" #theme required>
+                <kendo-formhint> Theme</kendo-formhint>
+                <kendo-formerror>Error: Theme is required</kendo-formerror>
+            </kendo-formfield>
+<!--   
+            <kendo-formfield>
+                <kendo-label for="name">Username:</kendo-label>
+                <select  type="text" class="form-control" id="type"  [(ngModel)]="username" required name="type" #type required>
+                    <option *ngFor="let u of users" [value]="u.username">{{u.username}}
+                </select>
+                <kendo-formhint> username</kendo-formhint>
+                <kendo-formerror>Error: username is required</kendo-formerror>
+              </kendo-formfield> -->
+          
+         
+            <br>
+            <span class="k-form-separator"></span>
+            <div class="k-form-buttons k-buttons-end">
+                <button class="k-button k-primary" >Submit</button>
+                <button class="k-button" (click)="gotoList()">Clear</button>
+            </div>
+        </fieldset>
+    </form>
+  </div>
+  
+  </div>
+  
+  

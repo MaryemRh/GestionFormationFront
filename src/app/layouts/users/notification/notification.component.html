@@ -1,0 +1,36 @@
+<div class="section-body">
+    <div class="row mt-sm-12">
+      <div class="col-12 col-md-12 col-lg-6">
+  
+        <div class="card">
+            <div class="card-body">
+            <h4>Notifications </h4>
+            </div>
+            
+            <div class="form-group col-md-6 col-12" *ngFor="let item of notifications;let i=index;">
+                <p class="clearfix">
+                <span class="float-left">
+                    {{i+1}} ~ 
+                </span>
+                <span class="float-left">
+                    {{item.message }}
+                </span>
+                </p>
+            </div>
+
+        <!--   <div class="card-body" *ngFor="let item of notifications">
+            
+            <p class="clearfix">
+                <span class="float-left">
+                {{item.message }}
+                </span>
+                
+            </p>
+            
+            </div> -->
+            
+        
+        </div>
+
+   
+</div>

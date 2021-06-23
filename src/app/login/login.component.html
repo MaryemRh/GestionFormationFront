@@ -1,0 +1,31 @@
+<div class="container-fluid">
+  <div class="row mt-2">
+      <div class="col-lg-12">
+          <form class="form-signin"   name="form" (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
+              <div class="text-center mb-4">
+                 <!--  <img class="mb-4" src="assets/images/accueil.png" alt="" width="250" height="55"> -->
+<!--                   <h1 class="h3 mb-3 font-weight-normal">Plateforme de gestion de formations et suivi des réalisations</h1>
+ -->                  <!-- <h3 class="h3 mb-3 font-weight-normal">Ouverture de session</h3> -->
+                  <!-- <p class="lead">Veuillez saisir vos paramètres de connexion session AD</p> -->
+              </div>
+              <div *ngIf="isLoginFailed"  class="alert alert-danger" role="alert">{{errorMessage}}</div>
+              <div class="form-label-group">
+                  <input type="text"  class="form-control" [(ngModel)]="form.username" name="username"
+                   autocomplete="off" placeholder="Nom d'utilisateur" required  #username="ngModel" autofocus>
+                  <label for="inputEmail">Nom d'utilisateur</label>
+              </div>
+              <div class="form-label-group">
+                  <input type="password" class="form-control" [(ngModel)]="form.password" name="password"
+                   autocomplete="off" placeholder="Mot de passe" required minlength="6" #password="ngModel">
+                  <label for="inputPassword">Mot de passe</label>
+              </div>
+
+              <button type="submit" class="btn btn-lg btn-success btn-block">Connexion</button>
+              <p class="mt-5 mb-3 text-muted text-center">&copy; 2020-2021</p>
+          </form>
+      </div>
+<!--         <div class="col-7">
+        <img class="w-50" src="../../assets/images/login-wallpaper.jpg" alt="First slide">
+      </div> -->
+  </div>
+</div>

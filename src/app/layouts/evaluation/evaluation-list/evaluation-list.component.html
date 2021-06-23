@@ -1,0 +1,158 @@
+<div class="section-body">
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Liste des Employées</h4>
+            <div class="card-header-action">
+              <button type="button" class="btn btn-success" (click)="open(addEmployes)"><i class="fas fa-plus"></i> Ajouter des employées</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <kendo-grid
+            [kendoGridBinding]="gridView"
+            kendoGridSelectBy="id"
+            [pageSize]="15"
+            [pageable]="true"
+            [sortable]="true"
+            [filterable]="true"
+            [selectedKeys]="mySelection"
+            [groupable]="true"
+            [reorderable]="true"
+            [resizable]="true"
+            [height]="800"
+            [columnMenu]="{ filter: true }">
+            <ng-template kendoGridToolbarTemplate>
+              <input kendoTextBox
+                placeholder="Search ..."
+                kendoTextBox
+                (input)="onFilter($event.target.value)"/>
+                <!-- <button kendoButton style="background-color: rgb(44, 233, 60);" look="outline" [icon]="'add'">Ajouter</button> -->
+                <button type="button" kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+                <button *ngIf="mySelection.length > 0" (click)="cloturerEntretiens()" kendoButton type="button">Clôturer</button>
+            </ng-template>
+            <kendo-grid-checkbox-column
+            [width]="45"
+            [headerClass]="{'text-center': true}"
+            [class]="{'text-center': true}"
+            [resizable]="false"
+            [columnMenu]="false"
+            showSelectAll="true"></kendo-grid-checkbox-column>
+            <kendo-grid-column title="Matricule" field="employee.matricule" [width]="90"></kendo-grid-column>
+            <kendo-grid-column title="Nom" field="employee.prenom" [width]="150"></kendo-grid-column>
+            <kendo-grid-column title="Prénom" field="employee.nom" [width]="150"></kendo-grid-column>
+            <kendo-grid-column field="campagne" title="Campagne" [width]="220"></kendo-grid-column>
+            <kendo-grid-column
+            field="status"
+            title="Etat"
+            [width]="100"
+            [class]="{ 'text-center': true }"
+            [resizable]="false"
+            filter="boolean">
+            <ng-template kendoGridCellTemplate let-dataItem>
+              <span *ngIf="dataItem.status === 'INITIALISEE'" class="badge badge-danger">Initialisé</span>
+              <span *ngIf="dataItem.status === 'ENVOYEE'" class="badge badge-success">Envoyé</span>
+              <span *ngIf="dataItem.status === 'VALIDEE'" class="badge badge-info">Validé</span>
+              <span *ngIf="dataItem.status === 'APPROUVEE'" class="badge badge-danger">Approuvé</span>
+              <span *ngIf="dataItem.status === 'CLOTUREE'" class="badge badge-danger">Cloturé</span>
+            </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="note1" title="Note 1" [width]="100">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                {{dataItem.note1 | number : '1.0-2'}}
+              </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="note2" title="Note 2" [width]="100">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                {{dataItem.note2 | number : '1.0-2'}}
+              </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="note3" title="Note 3" [width]="100">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                {{dataItem.note3 | number : '1.0-2'}}
+              </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="score" title="Score" [width]="100">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                {{(dataItem.note1 * 3) + (dataItem.note2 * 2) + (dataItem.note3 * 5) | number : '1.0-2'}}
+              </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-command-column title="command" width="300">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                  <button class="btn btn-success m-t-15 waves-effect" *ngIf="dataItem.campagne != 'Prime de performance'" routerLink="fiche/{{dataItem.id}}"><i class="fas fa-eye"></i>Consulter</button>
+                  <button class="btn btn-success m-t-15 waves-effect" *ngIf="dataItem.campagne == 'Prime de performance'" routerLink="performance/{{dataItem.id}}"><i class="fas fa-eye"></i>Consulter</button>
+                  <button class="btn btn-secondary m-t-15 waves-effect" kendoGridRemoveCommand (click)="changerEtat(dataItem.id)">Changer état</button>
+                  <button *ngIf="dataItem.status === 'APPROUVEE' && dataItem.employee.role.nomRole =='ROLE_USER'" (click)="cloturer(dataItem.id)" kendoButton >Clôturer</button>
+                  <button *ngIf="dataItem.status === 'VALIDEE' && dataItem.employee.role.nomRole =='ROLE_DIRECTOR'" (click)="cloturer(dataItem.id)" kendoButton>Clôturer</button>
+              </ng-template>
+          </kendo-grid-command-column>
+          <kendo-grid-excel fileName="campagne.xlsx" [fetchData]="allData"></kendo-grid-excel>
+          </kendo-grid>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <ng-template #addEmployes let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="formModal">Ajouter des employées</h5>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <kendo-grid
+      [kendoGridBinding]="employees"
+      kendoGridSelectBy="id"
+      [selectedKeys]="mySelection"
+      [pageSize]="10"
+      [pageable]="true"
+      [sortable]="true"
+      [groupable]="true"
+      [reorderable]="true"
+      [resizable]="true"
+
+      filterable="menu"
+      [height]="500"
+      [columnMenu]="{ filter: true }"
+  >
+      <ng-template kendoGridToolbarTemplate>
+          <input placeholder="Search in all columns..." kendoTextBox (input)="onFilter($event.target.value)"/>
+      </ng-template>
+      <kendo-grid-checkbox-column
+          [width]="45"
+          [headerClass]="{'text-center': true}"
+          [class]="{'text-center': true}"
+          [resizable]="false"
+          [columnMenu]="false"
+          showSelectAll="true"
+      ></kendo-grid-checkbox-column>
+        <kendo-grid-column
+        field="matricule"
+        title="Matricule"
+        [width]="120"
+        [class]="{'text-center': true}"
+        [resizable]="false">
+        </kendo-grid-column>
+          <kendo-grid-column field="nom" title="Nom & Prénom" [width]="250">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <!-- <figure class="avatar mr-2 avatar-sm bg-primary text-white user-img-radious-style" data-initial="CB"></figure> -->
+                <div class="customer-name">{{ dataItem.nom }} {{dataItem.prenom }}</div>
+              </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column
+          field="dateEmbauche"
+          title="Date d'embauche"
+          [width]="200"
+          [class]="{'text-center': true}"
+          [resizable]="false">
+          </kendo-grid-column>
+          <kendo-grid-column field="fonction" title="Fonction" [width]="220">
+          </kendo-grid-column>
+          </kendo-grid>
+    </div>
+    <button type="button" (click)="addEmployeesToCampagne()" class="btn btn-success m-t-15 waves-effect">Valider</button>
+  </ng-template>

@@ -1,0 +1,42 @@
+<div class="card h-100">
+  <div class="card-header">
+    <h4>Equipes</h4>
+    <div class="card-header-action">
+      <button type="button" class="btn btn-success" (click)="open(addEquipe)"><i class="fas fa-plus"></i> Ajouter</button>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-striped table-md" id="table-1">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Activite</th>
+          <th>Responsable</th>
+          <th>Action</th>
+        </tr>
+        <tr *ngFor="let equipe of equipes | slice: (page-1) * pageSize : page * pageSize; index as i">
+          <td>{{equipe.id}}</td>
+          <td>{{equipe.nomEquipe}}</td>
+          <td>{{equipe.activte.nomActivite}}</td>
+          <td>{{equipe.responsable}}</td>
+          <td><a href="javascript:void(0)" class="btn btn-outline-secondary" (click)="open(editEquipe,equipe)"><i class="far fa-edit"></i> Edit</a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer text-right">
+    <nav class="d-inline-block">
+      <ngb-pagination [collectionSize]="equipesSize" [(page)]="page" [maxSize]="5" [boundaryLinks]="true"
+      [pageSize]="pageSize" class="d-flex justify-content-center"></ngb-pagination>
+    </nav>
+  </div>
+</div>
+
+<ng-template #addEquipe let-modal>
+<app-add-equipe></app-add-equipe>
+</ng-template>
+
+<ng-template #editEquipe let-modal>
+<app-edit-equipe [equipe]="equipeObject"></app-edit-equipe>
+</ng-template>

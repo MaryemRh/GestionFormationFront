@@ -1,0 +1,59 @@
+<div class="card">
+  <form method="post" class="needs-validation">
+    <div class="card-header">
+      <h4>Historique des formations & compétences aquises</h4>
+    </div>
+    <div class="card-body" *ngFor="let item of formations;let i=index;">
+      <div class="row" >
+        <div class="form-group col-md-6 col-12">
+          <p class="clearfix">
+            <span class="float-left">
+           {{i+1}}: Formation Name
+            </span>
+            <span class="float-right text-muted">
+              {{item.titre}}
+            </span>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6 col-12">
+          <p class="clearfix">
+            <span class="float-left">
+              Date de formation
+            </span>
+            <span class="float-right text-muted">
+              {{item?.formation?.dateDebutFormation }} à {{item.formation.dateClotureFormation }}
+            </span>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6 col-12">
+          <p class="clearfix">
+            <span class="float-left">
+              Objectifs
+            </span>
+            <span class="float-right text-muted">
+     {{item.formation.objectif}}
+            </span>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6 col-12">
+          <p class="clearfix">
+            <span class="float-left">
+              Competences aquises
+            </span>
+            <span class="float-right text-muted">
+              Java, Angular, Spring boot, MySql.
+            </span>
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+</div>

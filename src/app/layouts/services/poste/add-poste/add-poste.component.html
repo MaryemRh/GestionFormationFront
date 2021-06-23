@@ -1,0 +1,11 @@
+<div class="modal-body">
+    <form class="" (ngSubmit)="addPosteForm.valid && submit()" novalidate [formGroup]="addPosteForm">
+      <div class="form-group">
+        <label>Nom du poste</label>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Nom du poste" formControlName="nomPoste">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success m-t-15 waves-effect">AJOUTER</button>
+    </form>
+  </div>
